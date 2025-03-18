@@ -33,7 +33,7 @@ class DummyModel(JavaModel):
 spark = (SparkSession.builder.remote("sc://localhost")
          .getOrCreate())
 
-# spark.addArtifacts("/home/bobwang/work.d/spark-rapids-ml/abc-jvm/target/com.example.ml-1.0-SNAPSHOT.jar")
+# spark.addArtifacts("target/com.example.ml-1.0-SNAPSHOT.jar")
 
 df = spark.createDataFrame([
         (Vectors.dense([1.0, 2.0]), 1),

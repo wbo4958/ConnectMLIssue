@@ -14,8 +14,8 @@ mvn clean package
 ## Start a standalone cluster
 
 ```shell
-start-master.sh -h localhost
-start-worker.sh spark://localhost:7077
+$SPARK_HOME/sbin/start-master.sh -h localhost
+$SPARK_HOME/sbin/start-worker.sh spark://localhost:7077
 ```
 
 ## Start a connect server connecting to the spark standalone cluster

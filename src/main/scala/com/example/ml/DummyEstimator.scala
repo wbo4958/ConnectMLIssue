@@ -1,19 +1,3 @@
-/**
- * Copyright (c) 2025, NVIDIA CORPORATION.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.ml
 
 import org.apache.spark.ml.param.ParamMap
@@ -37,10 +21,7 @@ class DummyModel(override val uid: String) extends Model[DummyModel] {
 
 
 /**
- * RapidsLogisticRegression is a JVM wrapper of LogisticRegression in spark-rapids-ml python package.
- *
- * The training process is going to launch a Python Process where to run spark-rapids-ml
- * LogisticRegression and return the corresponding model
+ * A dummy estimator that repros the issue
  *
  * @param uid unique ID of the estimator
  */
@@ -49,21 +30,13 @@ class DummyEstimator(override val uid: String) extends Estimator[DummyModel] {
   def this() = this("abcd")
 
   override def fit(dataset: Dataset[_]): DummyModel = {
+    println("--------------------------------------------------------- DummyEstimator ")
+
+    // This piece of code could repro the issue
     dataset.rdd.mapPartitions { iter =>
       iter
     }.collect()
 
-//    import dataset.sparkSession.implicits._
-//    val data = Seq("apple", "banana", "cherry")
-//    val ds = dataset.sparkSession.createDataset(data)
-//
-//    // Use mapPartitions to convert strings to uppercase
-//    val upperCaseDs = ds.mapPartitions { iter =>
-//      iter.map(_.toUpperCase)
-//    }
-//    upperCaseDs.collect()
-
-    println("--------------------------------------------------------- DummyEstimator ")
     new DummyModel(this.uid)
   }
 
